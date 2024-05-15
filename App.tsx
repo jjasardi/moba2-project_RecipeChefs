@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import Search from "./Search";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Wesh Open up App.js to start working on your app!</Text>
+      <Search></Search>
       <StatusBar style="auto" />
     </View>
   );
