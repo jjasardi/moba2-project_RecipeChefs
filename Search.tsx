@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Keyboard, StyleSheet, TextInput, View } from 'react-native'
+import { Button, Keyboard, StyleSheet, TextInput, View, SafeAreaView } from 'react-native'
 
 const Search = () => {
     const [searchText, setSearchText] = useState('')
@@ -9,7 +9,7 @@ const Search = () => {
     }
 
     return (
-        <View>
+        <SafeAreaView style={styles.container}>
             <TextInput
                 style={styles.input}
                 enterKeyHint='search'
@@ -21,22 +21,24 @@ const Search = () => {
                 title={'Search'}
                 onPress={() => {
                     handleSearch(searchText)
-                    
+
                 }}
             />
-        </View>
+        </SafeAreaView>
     )
 }
 
-// TODO: KACKE STYLES SCHÖNER MACHEN
-const styles = StyleSheet.create({ 
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      borderRadius: 20,
-      padding: 10,
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
     },
-  });
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        borderRadius: 20,
+        padding: 10,
+    },
+});
 
 export default Search
