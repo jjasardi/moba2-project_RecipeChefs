@@ -5,7 +5,7 @@ const Results = ({ navigation, route }) => {
     const recipes: [Recipe] = route.params.recipes
 
     const goToDetails = (selectedRecipe) => {
-        navigation.navigate('Details', {recipe: selectedRecipe})
+        navigation.navigate('Details', { recipe: selectedRecipe })
     }
 
     const renderItem = ({ item }) => {
@@ -13,11 +13,11 @@ const Results = ({ navigation, route }) => {
             <TouchableOpacity
                 onPress={() => goToDetails(item.recipe)}
                 style={styles.itemContainer}>
-                <Text style={styles.label}>{item.recipe.label}</Text>
                 <Image
                     source={{ uri: item.recipe.images.THUMBNAIL.url }}
                     style={styles.image}>
                 </Image>
+                <Text style={styles.label}>{item.recipe.label}</Text>
             </TouchableOpacity>
         )
     }
@@ -49,11 +49,10 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 15,
+        marginRight: 10,
     },
     label: {
         fontSize: 16,
-        fontWeight: 'bold',
-        marginRight: 10,
     },
 })
 

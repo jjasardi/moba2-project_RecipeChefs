@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, TextInput, View, SafeAreaView } from 'react-native'
+import { Button, StyleSheet, TextInput, SafeAreaView, Text, Keyboard } from 'react-native'
 import { fetchRecipes } from './fetchData'
 
-const Search = ({navigation}) => {
+const Search = ({ navigation }) => {
     const [searchText, setSearchText] = useState('')
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSearch = async () => {
         const fetchedRecipes = await fetchRecipes(searchText);
-        navigation.navigate('Results', {recipes: fetchedRecipes})
+        if (fetchedRecipes.length === 0) {
+            setErrorMessage(`No recipes found for ${searchText}.`);
+            setSearchText('')
+        } else {
+            navigation.navigate('Results', { recipes: fetchedRecipes })
+            Keyboard.dismiss()
+        }
     }
 
     return (
@@ -16,6 +23,7 @@ const Search = ({navigation}) => {
                 style={styles.input}
                 enterKeyHint='search'
                 placeholder='Enter recipe to search'
+                value={searchText}
                 onChangeText={text => setSearchText(text)}
                 onSubmitEditing={() => handleSearch()} >
             </TextInput>
@@ -23,8 +31,8 @@ const Search = ({navigation}) => {
                 title={'Search'}
                 onPress={() => {
                     handleSearch()
-                }}
-            />
+                }} />
+            {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
         </SafeAreaView>
     )
 }
@@ -39,6 +47,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         padding: 10,
+    },
+    errorText: {
+        color: 'red',
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 16,
     },
 });
 

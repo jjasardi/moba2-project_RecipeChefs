@@ -1,19 +1,23 @@
-import { SafeAreaView, Text, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, Image, StyleSheet, ScrollView } from 'react-native';
 
 const Details = ({ navigation, route }) => {
     const recipe = route.params.recipe
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image
-                source={{ uri: recipe.image }}
-                style={styles.image}>
-            </Image>
-            <Text>{recipe.label}</Text>
-            {recipe.ingredients.map(((ingredient, index) => (
-                <Text key={index}>{ingredient.text}</Text>
-            )
-            ))}
+            <ScrollView>
+                <Image
+                    source={{ uri: recipe.image }}
+                    style={styles.image}
+                    resizeMode="contain">
+                </Image>
+                <Text style={styles.label}>{recipe.label}</Text>
+                <Text style={styles.heading}>Ingredients:</Text>
+                {recipe.ingredients.map(((ingredient, index) => (
+                    <Text key={index} style={styles.ingredient}>{ingredient.text}</Text>
+                )
+                ))}
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -21,22 +25,27 @@ const Details = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
+        paddingHorizontal: 20,
+        paddingTop: 20,
     },
     image: {
-        width: 300,
+        width: '100%',
         height: 300,
+        marginBottom: 10,
     },
     label: {
-        fontSize: 16,
+        fontSize: 24,
         fontWeight: 'bold',
-        marginRight: 10,
+        marginBottom: 10,
+    },
+    heading: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    ingredient: {
+        fontSize: 16,
+        marginBottom: 5,
     },
 })
 
