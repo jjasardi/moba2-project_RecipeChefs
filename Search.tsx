@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Button, Keyboard, StyleSheet, TextInput, View, SafeAreaView } from 'react-native'
+import { Button, StyleSheet, TextInput, View, SafeAreaView } from 'react-native'
+import { fetchRecipes } from './fetchData'
 
-const Search = () => {
+const Search = ({navigation}) => {
     const [searchText, setSearchText] = useState('')
-    const handleSearch = (searchText: string) => {
-        console.log(searchText)
-        Keyboard.dismiss()
+
+    const handleSearch = async () => {
+        const fetchedRecipes = await fetchRecipes(searchText);
+        navigation.navigate('Results', {recipes: fetchedRecipes})
     }
 
     return (
@@ -15,13 +17,12 @@ const Search = () => {
                 enterKeyHint='search'
                 placeholder='Enter recipe to search'
                 onChangeText={text => setSearchText(text)}
-                onSubmitEditing={() => handleSearch(searchText)} >
+                onSubmitEditing={() => handleSearch()} >
             </TextInput>
             <Button
                 title={'Search'}
                 onPress={() => {
-                    handleSearch(searchText)
-
+                    handleSearch()
                 }}
             />
         </SafeAreaView>
