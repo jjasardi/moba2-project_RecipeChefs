@@ -10,10 +10,10 @@ const Search = ({ navigation }) => {
         const fetchedRecipes = await fetchRecipes(searchText);
         if (fetchedRecipes.length === 0) {
             setErrorMessage(`No recipes found for ${searchText}.`);
-            setSearchText('')
         } else {
             navigation.navigate('Results', { recipes: fetchedRecipes })
             Keyboard.dismiss()
+            setErrorMessage('')
         }
     }
 
